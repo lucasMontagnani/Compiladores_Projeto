@@ -8,7 +8,7 @@
 |        **Nome**         |     **RA**      |
 |:-----------------------:|:---------------:|
 |  **Grazielle Mascaro**  |                 |
-|  **Lucas Montagnani**   |                 |
+|  **Lucas Montagnani**   | **11201920895** |
 |     **Maria Clara**     |                 |
 | **Renan Ferreira Lima** | **11201722759** |
 |    **Thais Amorim**     |                 |
