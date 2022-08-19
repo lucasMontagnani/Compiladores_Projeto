@@ -20,7 +20,7 @@
 |                        Possuir 2 tipos de dados (pelo menos 1 String)                        |     S     |
 |                           Possuir a instrução de decisão (if/else)                           |     S     |
 |                             Pelo menos 1 estrutura de repetição                              |     N     |
-|                Verificar Atribuições com compatibilidade de tipos (semântica)                |     N     |
+|                Verificar Atribuições com compatibilidade de tipos (semântica)                |     S     |
 |                             Possuir operações de Entrada e Saída                             |     S     |
 |                                   Aceitar números decimais                                   |     S     |
 |       Verificar declaração de variávies (não usar variáveis que não foram declaradas)        |     S     |
