@@ -22,7 +22,7 @@
 |                             Pelo menos 1 estrutura de repetição                              |     N     |
 |                Verificar Atribuições com compatibilidade de tipos (semântica)                |     N     |
 |                             Possuir operações de Entrada e Saída                             |     S     |
-|                                   Aceitar números decimais                                   |     N     |
-|       Verificar declaração de variávies (não usar variáveis que não foram declaradas)        |     N     |
+|                                   Aceitar números decimais                                   |     S     |
+|       Verificar declaração de variávies (não usar variáveis que não foram declaradas)        |     S     |
 |               Verificar se há variáveis declaradas e não-utilizadas (warning)                |     N     |
 |                  Geração de pelo menos 1 linguagem destino (C/Java/Python)                   |     S     |
