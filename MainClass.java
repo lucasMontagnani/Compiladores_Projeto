@@ -3,13 +3,12 @@ public class MainClass{
   public static void main(String args[]){
        Scanner _key = new Scanner(System.in);
 double  a;
+String  teste;
 double  b;
-String  t1;
-a= _key.nextDouble();
-b= _key.nextDouble();
-a = 1+2*3/b;
-if (a>b) {
-System.out.println(a);}else {
-System.out.println(b);}
-
+double  c;
+teste = "aaaa";
+b = 4;
+c = 3;
+a = b+c;
+System.out.println(a);
   }}

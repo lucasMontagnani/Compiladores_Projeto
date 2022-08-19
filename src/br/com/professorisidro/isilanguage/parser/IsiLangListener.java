@@ -13,6 +13,8 @@ package br.com.professorisidro.isilanguage.parser;
 	import br.com.professorisidro.isilanguage.ast.CommandDecisao;
 	import java.util.ArrayList;
 	import java.util.Stack;
+	import java.util.HashMap;
+	import java.util.Map;
 
 import org.antlr.v4.runtime.tree.ParseTreeListener;
 

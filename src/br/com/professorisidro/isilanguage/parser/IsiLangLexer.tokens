@@ -18,6 +18,7 @@ OPREL=17
 ID=18
 NUMBER=19
 WS=20
+TEXTO=21
 'programa'=1
 'fimprog;'=2
 'numero'=3

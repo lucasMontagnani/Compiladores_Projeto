@@ -13,6 +13,8 @@ grammar IsiLang;
 	import br.com.professorisidro.isilanguage.ast.CommandDecisao;
 	import java.util.ArrayList;
 	import java.util.Stack;
+	import java.util.HashMap;
+	import java.util.Map;
 }
 
 @members{
@@ -32,6 +34,11 @@ grammar IsiLang;
 	private ArrayList<AbstractCommand> listaTrue;
 	private ArrayList<AbstractCommand> listaFalse;
 	
+	private Map<String, IsiVariable> varMap = new HashMap<String, IsiVariable>();
+	private IsiVariable varTemp;
+	private int termType;
+	private int tempVarType;
+	
 	public void verificaID(String id){
 		if (!symbolTable.exists(id)){
 			throw new IsiSemanticException("Symbol "+id+" not declared");
@@ -46,6 +53,17 @@ grammar IsiLang;
 	
 	public void generateCode(){
 		program.generateTarget();
+	}
+	
+	public void compatibilidadeTipos(int tipo1, String varName1, int tipo2, String varName2){
+		if(tipo1 != tipo2){
+			throw new IsiSemanticException("Error: incompatible types, symbol ["+varName2+"] can not be assign to symbol ["+varName1 + "].");
+		} 
+	
+	}
+	
+	public void verificaTipo(String name){
+		//System.out.println(symbolTable.get(name));
 	}
 }
 
@@ -64,8 +82,12 @@ declaravar :  tipo ID  {
 	                  _varName = _input.LT(-1).getText();
 	                  _varValue = null;
 	                  symbol = new IsiVariable(_varName, _tipo, _varValue);
+	                  
+	                  varTemp = new IsiVariable(_varName, _tipo, _varValue);
 	                  if (!symbolTable.exists(_varName)){
 	                     symbolTable.add(symbol);	
+	                     
+	                     varMap.put(_varName, varTemp);
 	                  }
 	                  else{
 	                  	 throw new IsiSemanticException("Symbol "+_varName+" already declared");
@@ -76,8 +98,12 @@ declaravar :  tipo ID  {
 	                  _varName = _input.LT(-1).getText();
 	                  _varValue = null;
 	                  symbol = new IsiVariable(_varName, _tipo, _varValue);
+	                  
+	                  varTemp = new IsiVariable(_varName, _tipo, _varValue);
 	                  if (!symbolTable.exists(_varName)){
 	                     symbolTable.add(symbol);	
+	                     
+	                      varMap.put(_varName, varTemp);
 	                  }
 	                  else{
 	                  	 throw new IsiSemanticException("Symbol "+_varName+" already declared");
@@ -133,9 +159,17 @@ cmdescrita	: 'escreva'
 			
 cmdattrib	:  ID { verificaID(_input.LT(-1).getText());
                     _exprID = _input.LT(-1).getText();
+                    
+                    tempVarType = varMap.get(_input.LT(-1).getText()).getType();
+                    //System.out.println("Tipoaaaa: " + tempVarType); // ----- TESTE DE COMPATIBILIDADE DE TIPOS
                    } 
                ATTR { _exprContent = ""; } 
-               expr 
+               expr { 
+               //System.out.println("AtribExprName: " + _input.LT(-1).getText()); // ----- TESTE DE COMPATIBILIDADE DE TIPOS
+               //System.out.println("TermType: " + termType); // ----- TESTE DE COMPATIBILIDADE DE TIPOS
+               
+               compatibilidadeTipos(tempVarType, _exprID, termType, _input.LT(-1).getText());
+               }
                SC
                {
                	 CommandAtribuicao cmd = new CommandAtribuicao(_exprID, _exprContent);
@@ -175,19 +209,28 @@ cmdselecao  :  'se' AP
                    )?
             ;
 			
-expr		:  termo ( 
+expr		:  termo 
+				( 
 	             OP  { _exprContent += _input.LT(-1).getText();}
-	            termo
+	            termo 
 	            )*
 			;
 			
 termo		: ID { verificaID(_input.LT(-1).getText());
 	               _exprContent += _input.LT(-1).getText();
+	                //System.out.println("termoTeste: " +_input.LT(-1).getText());
                  } 
             | 
               NUMBER
               {
               	_exprContent += _input.LT(-1).getText();
+              	//System.out.println("termoTeste: " +_input.LT(-1).getText());
+              	termType = 0;
+              }
+            | TEXTO 
+              {
+              _exprContent += _input.LT(-1).getText();
+              termType = 1;
               }
 			;
 			
@@ -227,3 +270,6 @@ NUMBER	: [0-9]+ ('.' [0-9]+)?
 		;
 		
 WS	: (' ' | '\t' | '\n' | '\r') -> skip;
+
+TEXTO : '"' .*? '"' 
+		  ;
