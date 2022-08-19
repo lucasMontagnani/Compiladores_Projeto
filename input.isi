@@ -1,11 +1,13 @@
 programa
 
-  numero a, b, c;
+  numero a, b, c, d, e;
   texto teste;
   
   teste = "aaaa";
   b = 4;
   c = 3;
+  
+  leia(d);
   
   a = b + c;
   

@@ -62,8 +62,18 @@ grammar IsiLang;
 	
 	}
 	
-	public void verificaTipo(String name){
-		//System.out.println(symbolTable.get(name));
+	public void varDeclaradasNaoUsadas(){
+		for (Map.Entry<String, IsiVariable> entry : varMap.entrySet()) {
+			//System.out.println("Key = " + entry.getKey() + ", Value = " + entry.getValue());
+			//System.out.println(entry.getValue().getUsada());
+			if(entry.getValue().getUsada() == false){
+				System.out.println("WARNING: A variável ["+ entry.getKey() + "] foi declarada mas nunca é usada.");
+			}
+		}
+	}
+	
+	public void setUsedVar(String nameID){
+		varMap.get(nameID).setUsadaTT();
 	}
 }
 
@@ -71,6 +81,7 @@ prog	: 'programa' decl bloco  'fimprog;'
            {  program.setVarTable(symbolTable);
            	  program.setComandos(stack.pop());
            	 
+           	 varDeclaradasNaoUsadas();
            } 
 		;
 		
@@ -133,6 +144,8 @@ cmd		:  cmdleitura
 cmdleitura	: 'leia' AP
                      ID { verificaID(_input.LT(-1).getText());
                      	  _readID = _input.LT(-1).getText();
+                     	  
+                     	  setUsedVar(_input.LT(-1).getText());
                         } 
                      FP 
                      SC 
@@ -162,6 +175,8 @@ cmdattrib	:  ID { verificaID(_input.LT(-1).getText());
                     
                     tempVarType = varMap.get(_input.LT(-1).getText()).getType();
                     //System.out.println("Tipoaaaa: " + tempVarType); // ----- TESTE DE COMPATIBILIDADE DE TIPOS
+                    
+                    setUsedVar(_input.LT(-1).getText());
                    } 
                ATTR { _exprContent = ""; } 
                expr { 
