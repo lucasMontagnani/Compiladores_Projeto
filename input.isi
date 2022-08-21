@@ -15,7 +15,7 @@ programa
   
   escreva(a);
   
-  enquanto(i>0){
+  enquanto(0<i){
   	escreva(i);
   	i = i - 1;
   }

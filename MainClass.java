@@ -16,7 +16,7 @@ c = 3;
 d= _key.nextDouble();
 a = b+c;
 System.out.println(a);
-while (i>0) {
+while (0<i) {
 System.out.println(i);
 i = i-1;
 }

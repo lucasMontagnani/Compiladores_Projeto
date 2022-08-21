@@ -199,7 +199,7 @@ cmdattrib	:  ID { verificaID(_input.LT(-1).getText());
 			
 			
 cmdselecao  :  'se' AP
-                    ID    { _exprDecision = _input.LT(-1).getText(); }
+                    (ID | NUMBER)    { _exprDecision = _input.LT(-1).getText(); }
                     OPREL { _exprDecision += _input.LT(-1).getText(); }
                     (ID | NUMBER) {_exprDecision += _input.LT(-1).getText(); }
                     FP 
@@ -230,7 +230,7 @@ cmdselecao  :  'se' AP
             ;
             
 cmdrepeticao: 'enquanto' AP
-			  			 ID    { _exprRepeticao = _input.LT(-1).getText(); }
+			  			 (ID | NUMBER)    { _exprRepeticao = _input.LT(-1).getText(); }
                          OPREL { _exprRepeticao += _input.LT(-1).getText(); }
                          (ID | NUMBER) {_exprRepeticao += _input.LT(-1).getText(); }
                          FP 

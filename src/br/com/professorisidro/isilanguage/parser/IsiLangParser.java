@@ -771,10 +771,6 @@ public class IsiLangParser extends Parser {
 
 	public static class CmdselecaoContext extends ParserRuleContext {
 		public TerminalNode AP() { return getToken(IsiLangParser.AP, 0); }
-		public List<TerminalNode> ID() { return getTokens(IsiLangParser.ID); }
-		public TerminalNode ID(int i) {
-			return getToken(IsiLangParser.ID, i);
-		}
 		public TerminalNode OPREL() { return getToken(IsiLangParser.OPREL, 0); }
 		public TerminalNode FP() { return getToken(IsiLangParser.FP, 0); }
 		public List<TerminalNode> ACH() { return getTokens(IsiLangParser.ACH); }
@@ -785,7 +781,14 @@ public class IsiLangParser extends Parser {
 		public TerminalNode FCH(int i) {
 			return getToken(IsiLangParser.FCH, i);
 		}
-		public TerminalNode NUMBER() { return getToken(IsiLangParser.NUMBER, 0); }
+		public List<TerminalNode> ID() { return getTokens(IsiLangParser.ID); }
+		public TerminalNode ID(int i) {
+			return getToken(IsiLangParser.ID, i);
+		}
+		public List<TerminalNode> NUMBER() { return getTokens(IsiLangParser.NUMBER); }
+		public TerminalNode NUMBER(int i) {
+			return getToken(IsiLangParser.NUMBER, i);
+		}
 		public List<CmdContext> cmd() {
 			return getRuleContexts(CmdContext.class);
 		}
@@ -818,7 +821,15 @@ public class IsiLangParser extends Parser {
 			setState(99);
 			match(AP);
 			setState(100);
-			match(ID);
+			_la = _input.LA(1);
+			if ( !(_la==ID || _la==NUMBER) ) {
+			_errHandler.recoverInline(this);
+			}
+			else {
+				if ( _input.LA(1)==Token.EOF ) matchedEOF = true;
+				_errHandler.reportMatch(this);
+				consume();
+			}
 			 _exprDecision = _input.LT(-1).getText(); 
 			setState(102);
 			match(OPREL);
@@ -914,15 +925,18 @@ public class IsiLangParser extends Parser {
 
 	public static class CmdrepeticaoContext extends ParserRuleContext {
 		public TerminalNode AP() { return getToken(IsiLangParser.AP, 0); }
-		public List<TerminalNode> ID() { return getTokens(IsiLangParser.ID); }
-		public TerminalNode ID(int i) {
-			return getToken(IsiLangParser.ID, i);
-		}
 		public TerminalNode OPREL() { return getToken(IsiLangParser.OPREL, 0); }
 		public TerminalNode FP() { return getToken(IsiLangParser.FP, 0); }
 		public TerminalNode ACH() { return getToken(IsiLangParser.ACH, 0); }
 		public TerminalNode FCH() { return getToken(IsiLangParser.FCH, 0); }
-		public TerminalNode NUMBER() { return getToken(IsiLangParser.NUMBER, 0); }
+		public List<TerminalNode> ID() { return getTokens(IsiLangParser.ID); }
+		public TerminalNode ID(int i) {
+			return getToken(IsiLangParser.ID, i);
+		}
+		public List<TerminalNode> NUMBER() { return getTokens(IsiLangParser.NUMBER); }
+		public TerminalNode NUMBER(int i) {
+			return getToken(IsiLangParser.NUMBER, i);
+		}
 		public List<CmdContext> cmd() {
 			return getRuleContexts(CmdContext.class);
 		}
@@ -955,7 +969,15 @@ public class IsiLangParser extends Parser {
 			setState(130);
 			match(AP);
 			setState(131);
-			match(ID);
+			_la = _input.LA(1);
+			if ( !(_la==ID || _la==NUMBER) ) {
+			_errHandler.recoverInline(this);
+			}
+			else {
+				if ( _input.LA(1)==Token.EOF ) matchedEOF = true;
+				_errHandler.reportMatch(this);
+				consume();
+			}
 			 _exprRepeticao = _input.LT(-1).getText(); 
 			setState(133);
 			match(OPREL);
@@ -1179,13 +1201,13 @@ public class IsiLangParser extends Parser {
 		"\2QR\7\25\2\2RV\b\t\1\2ST\7\30\2\2TV\b\t\1\2UQ\3\2\2\2US\3\2\2\2VW\3\2"+
 		"\2\2WX\7\r\2\2XY\7\16\2\2YZ\b\t\1\2Z\21\3\2\2\2[\\\7\25\2\2\\]\b\n\1\2"+
 		"]^\7\20\2\2^_\b\n\1\2_`\5\30\r\2`a\b\n\1\2ab\7\16\2\2bc\b\n\1\2c\23\3"+
-		"\2\2\2de\7\t\2\2ef\7\f\2\2fg\7\25\2\2gh\b\13\1\2hi\7\24\2\2ij\b\13\1\2"+
+		"\2\2\2de\7\t\2\2ef\7\f\2\2fg\t\2\2\2gh\b\13\1\2hi\7\24\2\2ij\b\13\1\2"+
 		"jk\t\2\2\2kl\b\13\1\2lm\7\r\2\2mn\7\22\2\2np\b\13\1\2oq\5\f\7\2po\3\2"+
 		"\2\2qr\3\2\2\2rp\3\2\2\2rs\3\2\2\2st\3\2\2\2tu\7\23\2\2u\u0081\b\13\1"+
 		"\2vw\7\n\2\2wx\7\22\2\2xz\b\13\1\2y{\5\f\7\2zy\3\2\2\2{|\3\2\2\2|z\3\2"+
 		"\2\2|}\3\2\2\2}~\3\2\2\2~\177\7\23\2\2\177\u0080\b\13\1\2\u0080\u0082"+
 		"\3\2\2\2\u0081v\3\2\2\2\u0081\u0082\3\2\2\2\u0082\25\3\2\2\2\u0083\u0084"+
-		"\7\13\2\2\u0084\u0085\7\f\2\2\u0085\u0086\7\25\2\2\u0086\u0087\b\f\1\2"+
+		"\7\13\2\2\u0084\u0085\7\f\2\2\u0085\u0086\t\2\2\2\u0086\u0087\b\f\1\2"+
 		"\u0087\u0088\7\24\2\2\u0088\u0089\b\f\1\2\u0089\u008a\t\2\2\2\u008a\u008b"+
 		"\b\f\1\2\u008b\u008c\7\r\2\2\u008c\u008d\7\22\2\2\u008d\u008f\b\f\1\2"+
 		"\u008e\u0090\5\f\7\2\u008f\u008e\3\2\2\2\u0090\u0091\3\2\2\2\u0091\u008f"+
