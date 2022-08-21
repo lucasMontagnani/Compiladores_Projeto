@@ -163,9 +163,10 @@ cmdleitura	: 'leia' AP
 			
 cmdescrita	: 'escreva' 
                  AP 
-                 ID { verificaID(_input.LT(-1).getText());
+                 (ID { verificaID(_input.LT(-1).getText());
 	                  _writeID = _input.LT(-1).getText();
                      } 
+                 | TEXTO {_writeID = _input.LT(-1).getText();} )  
                  FP 
                  SC
                {

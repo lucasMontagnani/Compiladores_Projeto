@@ -19,5 +19,7 @@ programa
   	escreva(i);
   	i = i - 1;
   }
+  
+ escreva("fghfdkjgn");
 
 fimprog;
