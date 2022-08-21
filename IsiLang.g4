@@ -11,6 +11,7 @@ grammar IsiLang;
 	import br.com.professorisidro.isilanguage.ast.CommandEscrita;
 	import br.com.professorisidro.isilanguage.ast.CommandAtribuicao;
 	import br.com.professorisidro.isilanguage.ast.CommandDecisao;
+	import br.com.professorisidro.isilanguage.ast.CommandRepeticao;
 	import java.util.ArrayList;
 	import java.util.Stack;
 	import java.util.HashMap;
@@ -38,6 +39,8 @@ grammar IsiLang;
 	private IsiVariable varTemp;
 	private int termType;
 	private int tempVarType;
+	private String _exprRepeticao;
+	private ArrayList<AbstractCommand> instrucoes;
 	
 	public void verificaID(String id){
 		if (!symbolTable.exists(id)){
@@ -139,6 +142,7 @@ cmd		:  cmdleitura
  		|  cmdescrita 
  		|  cmdattrib
  		|  cmdselecao  
+ 		|  cmdrepeticao
 		;
 		
 cmdleitura	: 'leia' AP
@@ -223,6 +227,26 @@ cmdselecao  :  'se' AP
                    	}
                    )?
             ;
+            
+cmdrepeticao: 'enquanto' AP
+			  			 ID    { _exprRepeticao = _input.LT(-1).getText(); }
+                         OPREL { _exprRepeticao += _input.LT(-1).getText(); }
+                         (ID | NUMBER) {_exprRepeticao += _input.LT(-1).getText(); }
+                         FP 
+                         ACH 
+                         { curThread = new ArrayList<AbstractCommand>(); 
+                      	   stack.push(curThread);
+                    	 }
+                    	 
+                         (cmd)+ 
+                    
+                         FCH 
+                         {
+                         instrucoes = stack.pop();	
+                    	 CommandRepeticao cmd = new CommandRepeticao(_exprRepeticao, instrucoes);
+                   		 stack.peek().add(cmd);
+                   	     }
+            ;      	     
 			
 expr		:  termo 
 				( 

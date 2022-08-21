@@ -2,7 +2,9 @@ programa
 
   numero a, b, c, d, e;
   texto teste;
+  numero i;
   
+  i=5;
   teste = "aaaa";
   b = 4;
   c = 3;
@@ -12,5 +14,10 @@ programa
   a = b + c;
   
   escreva(a);
+  
+  enquanto(i>0){
+  	escreva(i);
+  	i = i - 1;
+  }
 
 fimprog;
