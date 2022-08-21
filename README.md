@@ -24,5 +24,5 @@
 |                             Possuir operações de Entrada e Saída                             |     S     |
 |                                   Aceitar números decimais                                   |     S     |
 |       Verificar declaração de variávies (não usar variáveis que não foram declaradas)        |     S     |
-|               Verificar se há variáveis declaradas e não-utilizadas (warning)                |     N     |
+|               Verificar se há variáveis declaradas e não-utilizadas (warning)                |     S     |
 |                  Geração de pelo menos 1 linguagem destino (C/Java/Python)                   |     S     |
