@@ -19,7 +19,7 @@
 |:--------------------------------------------------------------------------------------------:|:---------:|
 |                        Possuir 2 tipos de dados (pelo menos 1 String)                        |     S     |
 |                           Possuir a instrução de decisão (if/else)                           |     S     |
-|                             Pelo menos 1 estrutura de repetição                              |     N     |
+|                             Pelo menos 1 estrutura de repetição                              |     S     |
 |                Verificar Atribuições com compatibilidade de tipos (semântica)                |     S     |
 |                             Possuir operações de Entrada e Saída                             |     S     |
 |                                   Aceitar números decimais                                   |     S     |

@@ -1,25 +1,25 @@
 programa
 
   numero a, b, c, d, e;
+  inteiro r, s, t, u;
+  inteiro f;
   texto teste;
-  numero i;
-  
-  i=5;
+  inteiro i;
+  texto m;
+
+  i = 10;
   teste = "aaaa";
-  b = 4;
-  c = 3;
-  
+  b = 4.9;
+  c = 3.6;
+  f = 10;
+  escreva(b);
   leia(d);
-  
-  a = b + c;
-  
-  escreva(a);
-  
-  enquanto(0<i){
-  	escreva(i);
-  	i = i - 1;
-  }
-  
- escreva("fghfdkjgn");
+  escreva(f);
+  f = i;
+  escreva(f);
+  escreva(i);
+  c = b;
+  a = b;
+
 
 fimprog;

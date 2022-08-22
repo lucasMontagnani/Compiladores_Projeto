@@ -26,3 +26,10 @@
 |       Verificar declaração de variávies (não usar variáveis que não foram declaradas)        |     S     |
 |               Verificar se há variáveis declaradas e não-utilizadas (warning)                |     S     |
 |                  Geração de pelo menos 1 linguagem destino (C/Java/Python)                   |     S     |
+
+
+|                                   **ANEXO 1**                                   | **FEITO** |
+|:-------------------------------------------------------------------------------:|:---------:|
+|                    Nova instrução Switch/Case (escolha/caso)                    |     N     |
+|                               Mais tipos de dados                               |     S     |
+

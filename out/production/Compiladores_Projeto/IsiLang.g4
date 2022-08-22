@@ -11,6 +11,7 @@ grammar IsiLang;
 	import br.com.professorisidro.isilanguage.ast.CommandEscrita;
 	import br.com.professorisidro.isilanguage.ast.CommandAtribuicao;
 	import br.com.professorisidro.isilanguage.ast.CommandDecisao;
+	import br.com.professorisidro.isilanguage.ast.CommandRepeticao;
 	import java.util.ArrayList;
 	import java.util.Stack;
 	import java.util.HashMap;
@@ -38,6 +39,8 @@ grammar IsiLang;
 	private IsiVariable varTemp;
 	private int termType;
 	private int tempVarType;
+	private String _exprRepeticao;
+	private ArrayList<AbstractCommand> instrucoes;
 	
 	public void verificaID(String id){
 		if (!symbolTable.exists(id)){
@@ -56,9 +59,22 @@ grammar IsiLang;
 	}
 	
 	public void compatibilidadeTipos(int tipo1, String varName1, int tipo2, String varName2){
-		if(tipo1 != tipo2){
+	    if(varMap.get(varName1) != null && varMap.get(varName2) != null){
+	        //System.out.println("Variável 2: " + varMap.get(varName2));
+	        //System.out.println("Valor da variável 2: " + (varMap.get(varName2)).getValue());
+	        if((varMap.get(varName2)).getValue() == null){
+                throw new IsiSemanticException("Error: null exception, symbol ["+varName2+"] can not be assign to symbol ["+varName1 + "], because it is null.");
+            }
+            else{
+                (varMap.get(varName1)).setValue((varMap.get(varName2)).getValue());
+            }
+	    }
+		else if(((tipo1 != tipo2) && (tipo1 != 1 && tipo2 != 0))){
 			throw new IsiSemanticException("Error: incompatible types, symbol ["+varName2+"] can not be assign to symbol ["+varName1 + "].");
-		} 
+		}
+		else{
+		    (varMap.get(varName1)).setValue(varName2);
+		}
 	
 	}
 	
@@ -67,7 +83,7 @@ grammar IsiLang;
 			//System.out.println("Key = " + entry.getKey() + ", Value = " + entry.getValue());
 			//System.out.println(entry.getValue().getUsada());
 			if(entry.getValue().getUsada() == false){
-				System.out.println("WARNING: A variável ["+ entry.getKey() + "] foi declarada mas nunca usada.");
+				System.out.println("WARNING: A variável ["+ entry.getKey() + "] foi declarada mas nunca é usada.");
 			}
 		}
 	}
@@ -93,7 +109,10 @@ declaravar :  tipo ID  {
 	                  _varName = _input.LT(-1).getText();
 	                  _varValue = null;
 	                  symbol = new IsiVariable(_varName, _tipo, _varValue);
-	                  
+	                  //System.out.println("Nome ID: " + _varName); // ----- TESTE DE COMPATIBILIDADE DE TIPOS
+                      //System.out.println("Tipo ID: " + _tipo); // ----- TESTE DE COMPATIBILIDADE DE TIPOS
+                      //System.out.println("Valor ID: " + _varValue); // ----- TESTE DE COMPATIBILIDADE DE TIPOS
+
 	                  varTemp = new IsiVariable(_varName, _tipo, _varValue);
 	                  if (!symbolTable.exists(_varName)){
 	                     symbolTable.add(symbol);	
@@ -111,6 +130,10 @@ declaravar :  tipo ID  {
 	                  symbol = new IsiVariable(_varName, _tipo, _varValue);
 	                  
 	                  varTemp = new IsiVariable(_varName, _tipo, _varValue);
+	                  //System.out.println("Nome ID: " + _varName); // ----- TESTE DE COMPATIBILIDADE DE TIPOS
+	                  //System.out.println("Tipo ID: " + _tipo); // ----- TESTE DE COMPATIBILIDADE DE TIPOS
+                      //System.out.println("Valor ID: " + _varValue); // ----- TESTE DE COMPATIBILIDADE DE TIPOS
+
 	                  if (!symbolTable.exists(_varName)){
 	                     symbolTable.add(symbol);	
 	                     
@@ -124,7 +147,8 @@ declaravar :  tipo ID  {
                SC
            ;
            
-tipo       : 'numero' { _tipo = IsiVariable.NUMBER;  }
+tipo       : 'inteiro' { _tipo = IsiVariable.INT;  }
+           | 'numero' { _tipo = IsiVariable.NUMBER;  }
            | 'texto'  { _tipo = IsiVariable.TEXT;  }
            ;
         
@@ -139,6 +163,7 @@ cmd		:  cmdleitura
  		|  cmdescrita 
  		|  cmdattrib
  		|  cmdselecao  
+ 		|  cmdrepeticao
 		;
 		
 cmdleitura	: 'leia' AP
@@ -159,9 +184,10 @@ cmdleitura	: 'leia' AP
 			
 cmdescrita	: 'escreva' 
                  AP 
-                 ID { verificaID(_input.LT(-1).getText());
+                 (ID { verificaID(_input.LT(-1).getText());
 	                  _writeID = _input.LT(-1).getText();
                      } 
+                 | TEXTO {_writeID = _input.LT(-1).getText();} )  
                  FP 
                  SC
                {
@@ -182,7 +208,11 @@ cmdattrib	:  ID { verificaID(_input.LT(-1).getText());
                expr { 
                //System.out.println("AtribExprName: " + _input.LT(-1).getText()); // ----- TESTE DE COMPATIBILIDADE DE TIPOS
                //System.out.println("TermType: " + termType); // ----- TESTE DE COMPATIBILIDADE DE TIPOS
-               
+               //System.out.println("Já existe? : " + _input.LT(-1).getText() + " "+ varMap.get(_exprID));
+               if(varMap.get(_input.LT(-1).getText()) != null){
+                    termType = varMap.get(_input.LT(-1).getText()).getType();
+                     //System.out.println("Novo type : " + termType);
+               }
                compatibilidadeTipos(tempVarType, _exprID, termType, _input.LT(-1).getText());
                }
                SC
@@ -194,9 +224,9 @@ cmdattrib	:  ID { verificaID(_input.LT(-1).getText());
 			
 			
 cmdselecao  :  'se' AP
-                    ID    { _exprDecision = _input.LT(-1).getText(); }
+                    (ID | NUMBER | INT)    { _exprDecision = _input.LT(-1).getText(); }
                     OPREL { _exprDecision += _input.LT(-1).getText(); }
-                    (ID | NUMBER) {_exprDecision += _input.LT(-1).getText(); }
+                    (ID | NUMBER | INT) {_exprDecision += _input.LT(-1).getText(); }
                     FP 
                     ACH 
                     { curThread = new ArrayList<AbstractCommand>(); 
@@ -223,68 +253,102 @@ cmdselecao  :  'se' AP
                    	}
                    )?
             ;
+            
+cmdrepeticao: 'enquanto' AP
+			  			 (ID | NUMBER| INT)    { _exprRepeticao = _input.LT(-1).getText(); }
+                         OPREL { _exprRepeticao += _input.LT(-1).getText(); }
+                         (ID | NUMBER | INT) {_exprRepeticao += _input.LT(-1).getText(); }
+                         FP 
+                         ACH 
+                         {
+                           curThread = new ArrayList<AbstractCommand>();
+                      	   stack.push(curThread);
+                    	 }
+                    	 
+                         (cmd)+ 
+                    
+                         FCH 
+                         {
+                            instrucoes = stack.pop();
+                    	    CommandRepeticao cmd = new CommandRepeticao(_exprRepeticao, instrucoes);
+                   		    stack.peek().add(cmd);
+                   	     }
+            ;      	     
 			
 expr		:  termo 
 				( 
 	             OP  { _exprContent += _input.LT(-1).getText();}
-	            termo 
+	             termo
 	            )*
 			;
 			
-termo		: ID { verificaID(_input.LT(-1).getText());
+termo		: ID {
+                   verificaID(_input.LT(-1).getText());
 	               _exprContent += _input.LT(-1).getText();
-	                //System.out.println("termoTeste: " +_input.LT(-1).getText());
-                 } 
-            | 
-              NUMBER
+                 }
+            | INT
+                {
+                  _exprContent += _input.LT(-1).getText();
+                  termType = 0;
+                }
+            | NUMBER
               {
               	_exprContent += _input.LT(-1).getText();
-              	//System.out.println("termoTeste: " +_input.LT(-1).getText());
-              	termType = 0;
+              	termType = 1;
               }
             | TEXTO 
               {
-              _exprContent += _input.LT(-1).getText();
-              termType = 1;
+                _exprContent += _input.LT(-1).getText();
+                termType = 2;
               }
+
 			;
-			
-	
+
+
 AP	: '('
 	;
 	
 FP	: ')'
 	;
-	
+
+PT  : '.'
+    ;
+
+COLON  : ':'
+       ;
+
 SC	: ';'
 	;
-	
+
 OP	: '+' | '-' | '*' | '/'
 	;
-	
+
 ATTR : '='
 	 ;
-	 
+
 VIR  : ','
      ;
-     
+
 ACH  : '{'
      ;
-     
+
 FCH  : '}'
      ;
-	 
-	 
+
+
 OPREL : '>' | '<' | '>=' | '<=' | '==' | '!='
       ;
-      
+
 ID	: [a-z] ([a-z] | [A-Z] | [0-9])*
 	;
-	
-NUMBER	: [0-9]+ ('.' [0-9]+)?
+
+INT     : [0-9]+
+        ;
+
+NUMBER	: INT PT INT
 		;
-		
+
 WS	: (' ' | '\t' | '\n' | '\r') -> skip;
 
-TEXTO : '"' .*? '"' 
-		  ;
+TEXTO : '"' .*? '"'
+	  ;

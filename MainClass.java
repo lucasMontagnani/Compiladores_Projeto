@@ -8,17 +8,24 @@ double  b;
 double  c;
 double  d;
 double  e;
-double  i;
-i = 5;
+int  f;
+int  i;
+String  m;
+int  r;
+int  s;
+int  t;
+int  u;
+i = 10;
 teste = "aaaa";
-b = 4;
-c = 3;
+b = 4.9;
+c = 3.6;
+f = 10;
+System.out.println(b);
 d= _key.nextDouble();
-a = b+c;
-System.out.println(a);
-while (0<i) {
+System.out.println(f);
+f = i;
+System.out.println(f);
 System.out.println(i);
-i = i-1;
-}
-System.out.println("fghfdkjgn");
+c = b;
+a = b;
   }}
