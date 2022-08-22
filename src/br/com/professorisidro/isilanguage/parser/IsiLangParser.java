@@ -153,7 +153,7 @@ public class IsiLangParser extends Parser {
 				//System.out.println("Key = " + entry.getKey() + ", Value = " + entry.getValue());
 				//System.out.println(entry.getValue().getUsada());
 				if(entry.getValue().getUsada() == false){
-					System.out.println("WARNING: A vari·vel ["+ entry.getKey() + "] foi declarada mas nunca È usada.");
+					System.out.println("WARNING: A vari√°vel ["+ entry.getKey() + "] foi declarada mas nunca √© usada.");
 				}
 			}
 		}

@@ -11,7 +11,6 @@ grammar IsiLang;
 	import br.com.professorisidro.isilanguage.ast.CommandEscrita;
 	import br.com.professorisidro.isilanguage.ast.CommandAtribuicao;
 	import br.com.professorisidro.isilanguage.ast.CommandDecisao;
-	import br.com.professorisidro.isilanguage.ast.CommandRepeticao;
 	import java.util.ArrayList;
 	import java.util.Stack;
 	import java.util.HashMap;
@@ -39,8 +38,6 @@ grammar IsiLang;
 	private IsiVariable varTemp;
 	private int termType;
 	private int tempVarType;
-	private String _exprRepeticao;
-	private ArrayList<AbstractCommand> instrucoes;
 	
 	public void verificaID(String id){
 		if (!symbolTable.exists(id)){
@@ -70,7 +67,7 @@ grammar IsiLang;
 			//System.out.println("Key = " + entry.getKey() + ", Value = " + entry.getValue());
 			//System.out.println(entry.getValue().getUsada());
 			if(entry.getValue().getUsada() == false){
-				System.out.println("WARNING: A variável ["+ entry.getKey() + "] foi declarada mas nunca é usada.");
+				System.out.println("WARNING: A variável ["+ entry.getKey() + "] foi declarada mas nunca usada.");
 			}
 		}
 	}
@@ -142,7 +139,6 @@ cmd		:  cmdleitura
  		|  cmdescrita 
  		|  cmdattrib
  		|  cmdselecao  
- 		|  cmdrepeticao
 		;
 		
 cmdleitura	: 'leia' AP
@@ -163,10 +159,9 @@ cmdleitura	: 'leia' AP
 			
 cmdescrita	: 'escreva' 
                  AP 
-                 (ID { verificaID(_input.LT(-1).getText());
+                 ID { verificaID(_input.LT(-1).getText());
 	                  _writeID = _input.LT(-1).getText();
                      } 
-                 | TEXTO {_writeID = _input.LT(-1).getText();} )  
                  FP 
                  SC
                {
@@ -199,7 +194,7 @@ cmdattrib	:  ID { verificaID(_input.LT(-1).getText());
 			
 			
 cmdselecao  :  'se' AP
-                    (ID | NUMBER)    { _exprDecision = _input.LT(-1).getText(); }
+                    ID    { _exprDecision = _input.LT(-1).getText(); }
                     OPREL { _exprDecision += _input.LT(-1).getText(); }
                     (ID | NUMBER) {_exprDecision += _input.LT(-1).getText(); }
                     FP 
@@ -228,26 +223,6 @@ cmdselecao  :  'se' AP
                    	}
                    )?
             ;
-            
-cmdrepeticao: 'enquanto' AP
-			  			 (ID | NUMBER)    { _exprRepeticao = _input.LT(-1).getText(); }
-                         OPREL { _exprRepeticao += _input.LT(-1).getText(); }
-                         (ID | NUMBER) {_exprRepeticao += _input.LT(-1).getText(); }
-                         FP 
-                         ACH 
-                         { curThread = new ArrayList<AbstractCommand>(); 
-                      	   stack.push(curThread);
-                    	 }
-                    	 
-                         (cmd)+ 
-                    
-                         FCH 
-                         {
-                         instrucoes = stack.pop();	
-                    	 CommandRepeticao cmd = new CommandRepeticao(_exprRepeticao, instrucoes);
-                   		 stack.peek().add(cmd);
-                   	     }
-            ;      	     
 			
 expr		:  termo 
 				( 
