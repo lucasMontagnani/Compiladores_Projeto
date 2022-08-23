@@ -151,13 +151,15 @@ declaravar :  tipo ID  {
 	                  	 throw new IsiSemanticException("Symbol "+_varName+" already declared");
 	                  }
                     }
-              )* 
+              )*
                SC
            ;
            
 tipo       : 'inteiro' { _tipo = IsiVariable.INT;  }
            | 'numero' { _tipo = IsiVariable.NUMBER;  }
+           | 'caractere' { _tipo = IsiVariable.CHAR;  }
            | 'texto'  { _tipo = IsiVariable.TEXT;  }
+           | 'boleano' { _tipo = IsiVariable.BOOLEAN;  }
            ;
         
 bloco	: { curThread = new ArrayList<AbstractCommand>(); 
@@ -209,7 +211,11 @@ cmdattrib	:  ID { verificaID(_input.LT(-1).getText());
 
                     tempVarType = varMap.get(_input.LT(-1).getText()).getType();
                     //System.out.println("Tipoaaaa: " + tempVarType); // ----- TESTE DE COMPATIBILIDADE DE TIPOS
+<<<<<<< HEAD
 
+=======
+                    //System.out.println("Nome: " + _input.LT(-1).getText());
+>>>>>>> 79e58e51a668736cec2c1044f62e7cc9eef943c9
                     setUsedVar(_input.LT(-1).getText());
                    }
                ATTR { _exprContent = ""; }
@@ -225,6 +231,11 @@ cmdattrib	:  ID { verificaID(_input.LT(-1).getText());
                }
                SC
                {
+                 if (_exprContent.equals("verdadeiro")){
+                    _exprContent = "true";
+                 } else if (_exprContent.equals("falso")){
+                    _exprContent = "false";
+                 }
                	 CommandAtribuicao cmd = new CommandAtribuicao(_exprID, _exprContent);
                	 stack.peek().add(cmd);
                }
@@ -326,28 +337,38 @@ expr        :  termo
                         isOpRaiz=false;
                     }
                 }
-                | TEXTO { _exprContent += _input.LT(-1).getText();}
                 ;
 
 			
-termo		: ID {
-                   verificaID(_input.LT(-1).getText());
-	               _exprContent += _input.LT(-1).getText();
-                 }
+termo		: ID
+               {
+                 verificaID(_input.LT(-1).getText());
+	             _exprContent += _input.LT(-1).getText();
+               }
             | INT
-                {
-                  _exprContent += _input.LT(-1).getText();
-                  termType = 0;
-                }
+               {
+                 _exprContent += _input.LT(-1).getText();
+                 termType = 0;
+               }
             | NUMBER
               {
               	_exprContent += _input.LT(-1).getText();
               	termType = 1;
               }
-            | TEXTO
+            | CARACTER
               {
                 _exprContent += _input.LT(-1).getText();
                 termType = 2;
+              }
+            | TEXTO 
+              {
+                _exprContent += _input.LT(-1).getText();
+                termType = 3;
+              }
+            | BOLEANO
+              {
+                _exprContent += _input.LT(-1).getText();
+                termType = 4;
               }
 
 			;
@@ -387,6 +408,9 @@ FCH  : '}'
 OPREL : '>' | '<' | '>=' | '<=' | '==' | '!='
       ;
 
+BOLEANO : 'verdadeiro' | 'falso'
+        ;
+
 ID	: [a-z] ([a-z] | [A-Z] | [0-9])*
 	;
 
@@ -397,6 +421,9 @@ NUMBER	: INT PT INT
 		;
 
 WS	: (' ' | '\t' | '\n' | '\r') -> skip;
+
+CARACTER : '\'' ~['\\\r\n] '\''
+         ;
 
 TEXTO : '"' .*? '"'
 	  ;

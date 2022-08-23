@@ -1,28 +1,36 @@
 programa
 
   numero a, b, c, d, e, w, y, x;
-  inteiro r, s, t, u;
+  inteiro r, s;
   inteiro f;
   texto teste;
   inteiro i;
   texto m;
+  caractere u;
+  boleano t;
 
+  u = 't';
+  t = falso;
+  escreva(u);
   i = 10;
-  teste = "aaaa";
+  teste = "Digite um número: ";
   b = 4.9;
-  c = 3.6;
+  c = 3.688;
   f = 10;
-  escreva(b);
+  escreva(teste);
+  escreva (c);
   leia(d);
   escreva(f);
   f = i;
   escreva(f);
   escreva(i);
   c = b;
-  a = b;
+
+  a = b*c;
   escreva(a);
-  b = a * b * b;
-  escreva(b);
+
+  a = b/c;
+  escreva(a);
 
   w = 25 #;
   escreva(w);
@@ -31,7 +39,7 @@ programa
   escreva(y);
 
   y = 10 ** 3;
-    escreva(y);
+  escreva(y);
 
   x = 2 $ 2;
   escreva(x);
