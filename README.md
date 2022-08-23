@@ -28,8 +28,9 @@
 |                  Geração de pelo menos 1 linguagem destino (C/Java/Python)                   |     S     |
 
 
-|                                   **ANEXO 1**                                   | **FEITO** |
-|:-------------------------------------------------------------------------------:|:---------:|
-|                    Nova instrução Switch/Case (escolha/caso)                    |     N     |
-|                               Mais tipos de dados                               |     S     |
+|                                             **ANEXO 1**                                              | **FEITO** |
+|:----------------------------------------------------------------------------------------------------:|:---------:|
+|                              Nova instrução Switch/Case (escolha/caso)                               |     N     |
+|                                         Mais tipos de dados                                          |     S     |
+|               Inclusão de novos operadores (exponenciação, raiz quadrada, logaritmos)                |     S     |
 
