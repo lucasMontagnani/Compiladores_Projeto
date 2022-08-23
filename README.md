@@ -30,7 +30,7 @@
 
 |                                             **ANEXO 1**                                              | **FEITO** |
 |:----------------------------------------------------------------------------------------------------:|:---------:|
-|                              Nova instrução Switch/Case (escolha/caso)                               |     N     |
+|                              Nova instrução Switch/Case (escolha/caso)                               |     S     |
 |                                         Mais tipos de dados                                          |     S     |
 |               Inclusão de novos operadores (exponenciação, raiz quadrada, logaritmos)                |     S     |
 

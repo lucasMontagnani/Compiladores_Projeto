@@ -16,11 +16,11 @@ public class CommandRepeticao extends AbstractCommand{
 	@Override
 	public String generateJavaCode() {
 		StringBuilder str = new StringBuilder();
-		str.append("	while ("+condition+") {\n");
+		str.append("		while ("+condition+") {\n");
 		for (AbstractCommand cmd: contend) {
 			str.append("	" + cmd.generateJavaCode() + "\n");
 		}
-		str.append("	}");
+		str.append("		}");
 		return str.toString();
 	}
 

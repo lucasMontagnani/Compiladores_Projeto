@@ -15,6 +15,7 @@ grammar IsiLang;
 	import br.com.professorisidro.isilanguage.ast.CommandOpExp;
 	import br.com.professorisidro.isilanguage.ast.CommandOpRaiz;
 	import br.com.professorisidro.isilanguage.ast.CommandOpLog;
+	import br.com.professorisidro.isilanguage.ast.CommandEscolha;
 	import java.util.ArrayList;
 	import java.util.Stack;
 	import java.util.HashMap;
@@ -35,15 +36,19 @@ grammar IsiLang;
 	private String _exprID;
 	private String _exprContent;
 	private String _exprDecision;
-	private ArrayList<AbstractCommand> listaTrue;
-	private ArrayList<AbstractCommand> listaFalse;
-	
-	private Map<String, IsiVariable> varMap = new HashMap<String, IsiVariable>();
-	private IsiVariable varTemp;
-	private int termType;
-	private int tempVarType;
-	private String _exprRepeticao;
-	private ArrayList<AbstractCommand> instrucoes;
+	private ArrayList<AbstractCommand> listaTrue = new ArrayList<AbstractCommand>();
+    private ArrayList<AbstractCommand> listaFalse = new ArrayList<AbstractCommand>();
+
+    private Map<String, IsiVariable> varMap = new HashMap<String, IsiVariable>();
+    private IsiVariable varTemp;
+    private int termType;
+    private int tempVarType;
+    private String _exprRepeticao;
+    private ArrayList<AbstractCommand> instrucoes;
+    private String _exprSwitch;
+    private HashMap<String, ArrayList<AbstractCommand>> cases = new HashMap<String, ArrayList<AbstractCommand>>();
+    private ArrayList<String> caseCondition = new ArrayList<String>();
+    private ArrayList<AbstractCommand> defaultCase = new ArrayList<AbstractCommand>();
 
 	private boolean isOpExp = false;
     private boolean isOpRaiz = false;
@@ -67,8 +72,6 @@ grammar IsiLang;
 	
 	public void compatibilidadeTipos(int tipo1, String varName1, int tipo2, String varName2){
 	    if(varMap.get(varName1) != null && varMap.get(varName2) != null){
-	        //System.out.println("Variável 2: " + varMap.get(varName2));
-	        //System.out.println("Valor da variável 2: " + (varMap.get(varName2)).getValue());
 	        if((varMap.get(varName2)).getValue() == null){
                 throw new IsiSemanticException("Error: null exception, symbol ["+varName2+"] can not be assign to symbol ["+varName1 + "], because it is null.");
             }
@@ -87,8 +90,6 @@ grammar IsiLang;
 	
 	public void varDeclaradasNaoUsadas(){
 		for (Map.Entry<String, IsiVariable> entry : varMap.entrySet()) {
-			//System.out.println("Key = " + entry.getKey() + ", Value = " + entry.getValue());
-			//System.out.println(entry.getValue().getUsada());
 			if(entry.getValue().getUsada() == false){
 				System.out.println("WARNING: A variável ["+ entry.getKey() + "] foi declarada mas nunca é usada.");
 			}
@@ -117,9 +118,6 @@ declaravar :  tipo ID  {
 	                  _varName = _input.LT(-1).getText();
 	                  _varValue = null;
 	                  symbol = new IsiVariable(_varName, _tipo, _varValue);
-	                  //System.out.println("Nome ID: " + _varName); // ----- TESTE DE COMPATIBILIDADE DE TIPOS
-                      //System.out.println("Tipo ID: " + _tipo); // ----- TESTE DE COMPATIBILIDADE DE TIPOS
-                      //System.out.println("Valor ID: " + _varValue); // ----- TESTE DE COMPATIBILIDADE DE TIPOS
 
 	                  varTemp = new IsiVariable(_varName, _tipo, _varValue);
 	                  if (!symbolTable.exists(_varName)){
@@ -138,9 +136,6 @@ declaravar :  tipo ID  {
 	                  symbol = new IsiVariable(_varName, _tipo, _varValue);
 	                  
 	                  varTemp = new IsiVariable(_varName, _tipo, _varValue);
-	                  //System.out.println("Nome ID: " + _varName); // ----- TESTE DE COMPATIBILIDADE DE TIPOS
-	                  //System.out.println("Tipo ID: " + _tipo); // ----- TESTE DE COMPATIBILIDADE DE TIPOS
-                      //System.out.println("Valor ID: " + _varValue); // ----- TESTE DE COMPATIBILIDADE DE TIPOS
 
 	                  if (!symbolTable.exists(_varName)){
 	                     symbolTable.add(symbol);	
@@ -169,11 +164,12 @@ bloco	: { curThread = new ArrayList<AbstractCommand>();
 		;
 		
 
-cmd		:  cmdleitura  
- 		|  cmdescrita 
+cmd		:  cmdleitura
+ 		|  cmdescrita
  		|  cmdattrib
- 		|  cmdselecao  
+ 		|  cmdselecao
  		|  cmdrepeticao
+ 		|  cmdescolha
 		;
 		
 cmdleitura	: 'leia' AP
@@ -210,23 +206,10 @@ cmdattrib	:  ID { verificaID(_input.LT(-1).getText());
                     _exprID = _input.LT(-1).getText();
 
                     tempVarType = varMap.get(_input.LT(-1).getText()).getType();
-                    //System.out.println("Tipoaaaa: " + tempVarType); // ----- TESTE DE COMPATIBILIDADE DE TIPOS
-<<<<<<< HEAD
-
-=======
-                    //System.out.println("Nome: " + _input.LT(-1).getText());
->>>>>>> 79e58e51a668736cec2c1044f62e7cc9eef943c9
                     setUsedVar(_input.LT(-1).getText());
                    }
                ATTR { _exprContent = ""; }
                expr {
-               //System.out.println("AtribExprName: " + _input.LT(-1).getText()); // ----- TESTE DE COMPATIBILIDADE DE TIPOS
-               //System.out.println("TermType: " + termType); // ----- TESTE DE COMPATIBILIDADE DE TIPOS
-               //System.out.println("Já existe? : " + _input.LT(-1).getText() + " "+ varMap.get(_exprID));
-               if(varMap.get(_input.LT(-1).getText()) != null){
-                    termType = varMap.get(_input.LT(-1).getText()).getType();
-                     //System.out.println("Novo type : " + termType);
-               }
                compatibilidadeTipos(tempVarType, _exprID, termType, _input.LT(-1).getText());
                }
                SC
@@ -243,34 +226,37 @@ cmdattrib	:  ID { verificaID(_input.LT(-1).getText());
 			
 			
 cmdselecao  :  'se' AP
-                    (ID | NUMBER | INT)    { _exprDecision = _input.LT(-1).getText(); }
+                    (ID | NUMBER | INT | CARACTER | BOLEANO)    { _exprDecision = _input.LT(-1).getText(); }
                     OPREL { _exprDecision += _input.LT(-1).getText(); }
-                    (ID | NUMBER | INT) {_exprDecision += _input.LT(-1).getText(); }
-                    FP 
-                    ACH 
-                    { curThread = new ArrayList<AbstractCommand>(); 
+                    (ID | NUMBER | INT | CARACTER | BOLEANO) {_exprDecision += _input.LT(-1).getText(); }
+                    FP
+                    ACH
+                    { curThread = new ArrayList<AbstractCommand>();
                       stack.push(curThread);
                     }
-                    (cmd)+ 
-                    
-                    FCH 
+                    (cmd)+
+
+                    FCH
                     {
-                       listaTrue = stack.pop();	
-                    } 
-                   ('senao' 
+                       listaTrue = stack.pop();
+                    }
+                   ('senao'
                    	 ACH
                    	 {
                    	 	curThread = new ArrayList<AbstractCommand>();
                    	 	stack.push(curThread);
-                   	 } 
-                   	(cmd+) 
+                   	 }
+                   	(cmd+)
                    	FCH
                    	{
                    		listaFalse = stack.pop();
-                   		CommandDecisao cmd = new CommandDecisao(_exprDecision, listaTrue, listaFalse);
-                   		stack.peek().add(cmd);
+
                    	}
                    )?
+                   {
+                     CommandDecisao cmd = new CommandDecisao(_exprDecision, listaTrue, listaFalse);
+                     stack.peek().add(cmd);
+                   }
             ;
             
 cmdrepeticao: 'enquanto' AP
@@ -292,6 +278,63 @@ cmdrepeticao: 'enquanto' AP
                     	    CommandRepeticao cmd = new CommandRepeticao(_exprRepeticao, instrucoes);
                    		    stack.peek().add(cmd);
                    	     }
+            ;
+
+cmdescolha  : 'escolha' AP
+                        ID {
+                             _exprSwitch = _input.LT(-1).getText();
+                           }
+                        FP
+                        ACH
+                        (
+                         'caso'
+                          (INT {
+                                 _exprContent = _input.LT(-1).getText();
+                                 termType = 0;
+                                }
+
+                           | CARACTER {
+                                         _exprContent = _input.LT(-1).getText();
+                                         termType = 2;
+                                       }
+                           | TEXTO {
+                                      _exprContent = _input.LT(-1).getText();
+                                      termType = 3;
+                                     }
+
+                          ){
+                             compatibilidadeTipos(varMap.get(_exprSwitch).getType(), _exprSwitch, termType, _exprContent);
+                             caseCondition.add(_exprContent);
+                           }
+                          COLON
+                          {
+                            curThread = new ArrayList<AbstractCommand>();
+                            stack.push(curThread);
+                          }
+                          (cmd+)
+                          'break'
+                          SC
+                          {
+                            cases.put(_exprContent,stack.pop());
+                          }
+                         )+
+                        (
+                          'padrao'
+                           COLON
+                           {
+                            curThread = new ArrayList<AbstractCommand>();
+                            stack.push(curThread);
+                           }
+                           (cmd+)
+                           {
+                            defaultCase = stack.pop();
+                           }
+                        )?
+                        FCH
+                        {
+                            CommandEscolha cmd = new CommandEscolha(_exprSwitch, caseCondition, cases, defaultCase);
+                            stack.peek().add(cmd);
+                        }
             ;
 
 			

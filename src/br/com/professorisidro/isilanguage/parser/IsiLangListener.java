@@ -1,7 +1,27 @@
 // Generated from IsiLang.g4 by ANTLR 4.7.1
 package br.com.professorisidro.isilanguage.parser;
 
-	import org.antlr.v4.runtime.tree.ParseTreeListener;
+	import br.com.professorisidro.isilanguage.datastructures.IsiSymbol;
+	import br.com.professorisidro.isilanguage.datastructures.IsiVariable;
+	import br.com.professorisidro.isilanguage.datastructures.IsiSymbolTable;
+	import br.com.professorisidro.isilanguage.exceptions.IsiSemanticException;
+	import br.com.professorisidro.isilanguage.ast.IsiProgram;
+	import br.com.professorisidro.isilanguage.ast.AbstractCommand;
+	import br.com.professorisidro.isilanguage.ast.CommandLeitura;
+	import br.com.professorisidro.isilanguage.ast.CommandEscrita;
+	import br.com.professorisidro.isilanguage.ast.CommandAtribuicao;
+	import br.com.professorisidro.isilanguage.ast.CommandDecisao;
+	import br.com.professorisidro.isilanguage.ast.CommandRepeticao;
+	import br.com.professorisidro.isilanguage.ast.CommandOpExp;
+	import br.com.professorisidro.isilanguage.ast.CommandOpRaiz;
+	import br.com.professorisidro.isilanguage.ast.CommandOpLog;
+	import br.com.professorisidro.isilanguage.ast.CommandEscolha;
+	import java.util.ArrayList;
+	import java.util.Stack;
+	import java.util.HashMap;
+	import java.util.Map;
+
+import org.antlr.v4.runtime.tree.ParseTreeListener;
 
 /**
  * This interface defines a complete listener for a parse tree produced by
@@ -118,6 +138,16 @@ public interface IsiLangListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitCmdrepeticao(IsiLangParser.CmdrepeticaoContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link IsiLangParser#cmdescolha}.
+	 * @param ctx the parse tree
+	 */
+	void enterCmdescolha(IsiLangParser.CmdescolhaContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link IsiLangParser#cmdescolha}.
+	 * @param ctx the parse tree
+	 */
+	void exitCmdescolha(IsiLangParser.CmdescolhaContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link IsiLangParser#expr}.
 	 * @param ctx the parse tree

@@ -28,13 +28,13 @@ public class CommandEscolha extends AbstractCommand {
 			str.append(caseCondition.get(i));
 			str.append(":\n");
 			for (AbstractCommand cse : cases.get(caseCondition.get(i))) {
-				str.append("			" + cse.generateJavaCode() + "\n");
+				str.append("		" + cse.generateJavaCode() + "\n");
 			}
 			str.append("				break;\n");
 		}
 		if(!def.isEmpty()){
 			str.append("			default:\n");
-			str.append("			" + def.get(0).generateJavaCode() + "\n");
+			str.append("		" + def.get(0).generateJavaCode() + "\n");
 		}
 		str.append("		}");
 		return str.toString();

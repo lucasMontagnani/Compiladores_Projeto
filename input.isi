@@ -35,6 +35,8 @@ programa
   cs = "teste";
   se (f==10){
     escreva(f);
+  } senao{
+    escreva(i);
   }
   escolha (cs){
     caso "teste":
