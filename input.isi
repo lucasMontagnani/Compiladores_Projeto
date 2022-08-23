@@ -1,6 +1,6 @@
 programa
 
-  numero a, b, c, d, e;
+  numero a, b, c, d, e, w, y, x;
   inteiro r, s, t, u;
   inteiro f;
   texto teste;
@@ -20,6 +20,20 @@ programa
   escreva(i);
   c = b;
   a = b;
+  escreva(a);
+  b = a * b * b;
+  escreva(b);
 
+  w = 25 #;
+  escreva(w);
+
+  y = 10 ^ 2;
+  escreva(y);
+
+  y = 10 ** 3;
+    escreva(y);
+
+  x = 2 $ 2;
+  escreva(x);
 
 fimprog;

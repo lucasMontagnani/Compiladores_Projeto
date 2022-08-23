@@ -1,7 +1,5 @@
 package br.com.professorisidro.isilanguage.ast;
 
-import br.com.professorisidro.isilanguage.datastructures.IsiVariable;
-
 public class CommandAtribuicao extends AbstractCommand{
 
 	private String id;
@@ -20,7 +18,5 @@ public class CommandAtribuicao extends AbstractCommand{
 	public String toString() {
 		return "CommandAtribuicao [id=" + id + ", expr=" + expr + "]";
 	}
-	
-	
 
 }

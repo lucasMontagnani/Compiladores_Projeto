@@ -12,6 +12,9 @@ grammar IsiLang;
 	import br.com.professorisidro.isilanguage.ast.CommandAtribuicao;
 	import br.com.professorisidro.isilanguage.ast.CommandDecisao;
 	import br.com.professorisidro.isilanguage.ast.CommandRepeticao;
+	import br.com.professorisidro.isilanguage.ast.CommandOpExp;
+	import br.com.professorisidro.isilanguage.ast.CommandOpRaiz;
+	import br.com.professorisidro.isilanguage.ast.CommandOpLog;
 	import java.util.ArrayList;
 	import java.util.Stack;
 	import java.util.HashMap;
@@ -41,6 +44,10 @@ grammar IsiLang;
 	private int tempVarType;
 	private String _exprRepeticao;
 	private ArrayList<AbstractCommand> instrucoes;
+
+	private boolean isOpExp = false;
+    private boolean isOpRaiz = false;
+    private boolean isOpLog = false;
 	
 	public void verificaID(String id){
 		if (!symbolTable.exists(id)){
@@ -91,6 +98,7 @@ grammar IsiLang;
 	public void setUsedVar(String nameID){
 		varMap.get(nameID).setUsadaTT();
 	}
+
 }
 
 prog	: 'programa' decl bloco  'fimprog;'
@@ -198,14 +206,14 @@ cmdescrita	: 'escreva'
 			
 cmdattrib	:  ID { verificaID(_input.LT(-1).getText());
                     _exprID = _input.LT(-1).getText();
-                    
+
                     tempVarType = varMap.get(_input.LT(-1).getText()).getType();
                     //System.out.println("Tipoaaaa: " + tempVarType); // ----- TESTE DE COMPATIBILIDADE DE TIPOS
-                    
+
                     setUsedVar(_input.LT(-1).getText());
-                   } 
-               ATTR { _exprContent = ""; } 
-               expr { 
+                   }
+               ATTR { _exprContent = ""; }
+               expr {
                //System.out.println("AtribExprName: " + _input.LT(-1).getText()); // ----- TESTE DE COMPATIBILIDADE DE TIPOS
                //System.out.println("TermType: " + termType); // ----- TESTE DE COMPATIBILIDADE DE TIPOS
                //System.out.println("Já existe? : " + _input.LT(-1).getText() + " "+ varMap.get(_exprID));
@@ -273,14 +281,54 @@ cmdrepeticao: 'enquanto' AP
                     	    CommandRepeticao cmd = new CommandRepeticao(_exprRepeticao, instrucoes);
                    		    stack.peek().add(cmd);
                    	     }
-            ;      	     
+            ;
+
 			
-expr		:  termo 
-				( 
-	             OP  { _exprContent += _input.LT(-1).getText();}
-	             termo
-	            )*
-			;
+expr        :  termo
+				(
+                    (OP  { _exprContent += _input.LT(-1).getText();}
+                    termo
+                     )*
+                    |
+                    OPEXP { _exprContent += " ";
+                        _exprContent += _input.LT(-1).getText();
+                        _exprContent += " ";
+                        isOpExp=true;
+                        }
+            	        termo
+            	    |
+                    OPLOG { _exprContent += " ";
+                            _exprContent += _input.LT(-1).getText();
+                            _exprContent += " ";
+                            isOpLog=true;
+                            }
+                 termo
+      			|
+                 OPRAIZ {_exprContent += " ";
+                 	_exprContent += _input.LT(-1).getText();
+                     isOpRaiz=true;
+                 }
+                )
+                {
+                    if(isOpExp) {
+                        CommandOpExp cmd = new CommandOpExp(_exprContent);
+                        _exprContent = cmd.generateJavaCode();
+                        isOpExp=false;
+                    }
+                    else if(isOpLog) {
+                         CommandOpLog cmd = new CommandOpLog(_exprContent);
+                         _exprContent = cmd.generateJavaCode();
+                         isOpLog=false;
+                    }
+                    else if(isOpRaiz) {
+                        CommandOpRaiz cmd = new CommandOpRaiz(_exprContent);
+                        _exprContent = cmd.generateJavaCode();
+                        isOpRaiz=false;
+                    }
+                }
+                | TEXTO { _exprContent += _input.LT(-1).getText();}
+                ;
+
 			
 termo		: ID {
                    verificaID(_input.LT(-1).getText());
@@ -296,7 +344,7 @@ termo		: ID {
               	_exprContent += _input.LT(-1).getText();
               	termType = 1;
               }
-            | TEXTO 
+            | TEXTO
               {
                 _exprContent += _input.LT(-1).getText();
                 termType = 2;
@@ -352,3 +400,12 @@ WS	: (' ' | '\t' | '\n' | '\r') -> skip;
 
 TEXTO : '"' .*? '"'
 	  ;
+
+OPEXP : '**' | '^'
+      ;
+
+OPRAIZ : '#'
+       ;
+
+OPLOG : '$'
+      ;
