@@ -4,7 +4,9 @@ public class IsiVariable extends IsiSymbol {
 
 	public static final int INT=0;
 	public static final int NUMBER=1;
-	public static final int TEXT=2;
+	public static final int CHAR=2;
+	public static final int TEXT=3;
+	public static final int BOOLEAN=4;
 	
 	private int type;
 	private String value;
@@ -53,6 +55,10 @@ public class IsiVariable extends IsiSymbol {
     	   str = "double ";
        } else if (type == INT){
     	   str = "int ";
+	   } else if (type == CHAR){
+		   str = "char ";
+	   } else if (type == BOOLEAN){
+		   str = "Boolean ";
        } else{
 			str = "String ";
 		}
