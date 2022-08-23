@@ -4,6 +4,7 @@ programa
   inteiro r, s;
   inteiro f;
   texto teste;
+  texto cs;
   inteiro i;
   texto m;
   caractere u;
@@ -12,7 +13,7 @@ programa
   u = 't';
   t = falso;
   escreva(u);
-  i = 10;
+  i = 5;
   teste = "Digite um número: ";
   b = 4.9;
   c = 3.688;
@@ -31,6 +32,25 @@ programa
 
   a = b/c;
   escreva(a);
+  cs = "teste";
+  se (f==10){
+    escreva(f);
+  }
+  escolha (cs){
+    caso "teste":
+            escreva (cs);
+            break;
+    caso "teste2":
+            escreva (i);
+            break;
+    padrao:
+            escreva (f);
+  }
+  i=10;
+  enquanto(i<10){
+    escreva(i);
+    i = i-1;
+  }
 
   w = 25 #;
   escreva(w);
