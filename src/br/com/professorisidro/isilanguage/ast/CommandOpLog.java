@@ -23,7 +23,7 @@ public class CommandOpLog extends AbstractCommand{
         getVariables();
         if (op.equalsIgnoreCase("$")) {
             // TODO Auto-generated method stub
-            return "(double) (Math.log("+ Double.parseDouble(a)+") / Math.log("+ Double.parseDouble(b)+"))";
+            return "Math.round(Math.log("+ Double.parseDouble(a)+") / Math.log("+ Double.parseDouble(b)+"))";
         }
 
         // TODO Auto-generated method stub

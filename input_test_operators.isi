@@ -1,0 +1,22 @@
+programa
+
+    numero a, b, c, d;
+
+    a = 25 #;
+    b = 10 ^ 2;
+    c = 10 ** 3;
+    d = 1000 $ 10;
+
+    escreva("A raiz quadrada de 25 é: ");
+    escreva(a);
+
+    escreva("10 elevado a 2 é: ");
+    escreva(b);
+
+    escreva("E 10 elevado a 3 é: ");
+    escreva(c);
+
+    escreva("O log de 1000 na base 10 é: ");
+    escreva(d);
+
+fimprog;
