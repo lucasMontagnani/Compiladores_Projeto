@@ -2,17 +2,19 @@ import java.util.Scanner;
 public class MainClass{ 
   public static void main(String args[]){
  		Scanner _key = new Scanner(System.in);
-		int  cs;
 		int  a;
-		String  tInt2;
 		int  b;
 		int  c;
-		Boolean  t;
 		double  d;
 		String  tCase;
 		String  tBoolean;
-		String  welcome;
+		String  tChar;
 		String  tInt;
+		int  cs;
+		String  tInt2;
+		Boolean  t;
+		String  welcome;
+		char  fimIsi;
 		welcome = "IsiLanguagem em Ação!";
 		System.out.println(welcome);
 		tInt = "Digite um inteiro: ";
@@ -28,7 +30,7 @@ public class MainClass{
 		if (b==c) {
 			System.out.println("O segundo inteiro é o dobro do primeiro!");
 		} else {
-			System.out.println("O segundo inteiro não é o dobro do primeiro!");
+			System.out.println("O segundo inteiro não é exatamente o dobro do primeiro!");
 		}
 		tBoolean = "Escreva true (verdadeiro) para multiplicar o primeiro inteiro pelo segundo e retornar o inteiro ou false (falso) para dividir";
 		System.out.println(tBoolean);
@@ -57,5 +59,11 @@ public class MainClass{
 			default:
 				System.out.println("Opção inválida!");
 		}
+		tChar = "Digite um caractere para finalizar o programa: ";
+		System.out.println(tChar);
+		fimIsi= _key.next().charAt(0);
+		System.out.println("Caractere digitado : ");
+		System.out.println(fimIsi);
+		System.out.println("Programa encerrado. Goodbye!");
   }
 }

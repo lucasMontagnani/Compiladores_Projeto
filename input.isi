@@ -5,12 +5,14 @@ programa
    texto tInt2;
    texto tBoolean;
    texto tCase;
+   texto tChar;
    inteiro a;
    inteiro b;
    inteiro c;
    inteiro cs;
    boleano t;
    numero d;
+   caractere fimIsi;
 
    welcome = "IsiLanguagem em Ação!";
    escreva (welcome);
@@ -31,7 +33,7 @@ programa
     escreva("O segundo inteiro é o dobro do primeiro!");
    }
    senao {
-    escreva("O segundo inteiro não é o dobro do primeiro!");
+    escreva("O segundo inteiro não é exatamente o dobro do primeiro!");
    }
 
    tBoolean = "Escreva true (verdadeiro) para multiplicar o primeiro inteiro pelo segundo e retornar o inteiro ou false (falso) para dividir";
@@ -67,6 +69,13 @@ programa
        padrao:
             escreva("Opção inválida!");
    }
+
+   tChar = "Digite um caractere para finalizar o programa: ";
+   escreva (tChar);
+   leia (fimIsi);
+   escreva ("Caractere digitado : ");
+   escreva(fimIsi);
+   escreva("Programa encerrado. Goodbye!");
 
 
 fimprog;
