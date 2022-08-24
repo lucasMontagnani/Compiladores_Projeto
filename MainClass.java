@@ -40,7 +40,7 @@ public class MainClass{
 		} else {
 			d = a/b;			System.out.println(d);
 		}
-		tCase = "Digite: 1 - Para imprimir o 1º inteiro; 2 - Para imprimir o 2º inteiro; 3 - Para o real resultante:";
+		tCase = "Digite: 1 - Para imprimir o 1º inteiro; 2 - Para imprimir o 2º inteiro; 3 - Somar os dois inteiros; 4 - Para subtrair o segundo inteiro do primeiro; 4 - Para o real resultante:";
 		System.out.println(tCase);
 		cs= _key.nextInt();
 		switch (cs) {
@@ -54,6 +54,16 @@ public class MainClass{
 				break;
 			case 3:
 				System.out.println("Opção 3 escolhida!");
+				c = a+b;
+				System.out.println(c);
+				break;
+			case 4:
+				System.out.println("Opção 4 escolhida!");
+				c = a-b;
+				System.out.println(c);
+				break;
+			case 5:
+				System.out.println("Opção 5 escolhida!");
 				System.out.println(d);
 				break;
 			default:

@@ -49,7 +49,7 @@ programa
     escreva(d);
    }
 
-   tCase =  "Digite: 1 - Para imprimir o 1º inteiro; 2 - Para imprimir o 2º inteiro; 3 - Para o real resultante:";
+   tCase =  "Digite: 1 - Para imprimir o 1º inteiro; 2 - Para imprimir o 2º inteiro; 3 - Somar os dois inteiros; 4 - Para subtrair o segundo inteiro do primeiro; 4 - Para o real resultante:";
    escreva (tCase);
    leia(cs);
 
@@ -64,6 +64,16 @@ programa
             break;
        caso 3:
             escreva("Opção 3 escolhida!");
+            c = a + b;
+            escreva(c);
+            break;
+       caso 4:
+            escreva("Opção 4 escolhida!");
+            c = a - b;
+            escreva(c);
+            break;
+       caso 5:
+            escreva("Opção 5 escolhida!");
             escreva(d);
             break;
        padrao:

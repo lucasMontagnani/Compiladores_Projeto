@@ -136,6 +136,7 @@ public class IsiLangLexer extends Lexer {
 		private boolean isOpExp = false;
 	    private boolean isOpRaiz = false;
 	    private boolean isOpLog = false;
+	    private String _caseCondition;
 		
 		public void verificaID(String id){
 			if (!symbolTable.exists(id)){

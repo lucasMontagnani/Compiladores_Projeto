@@ -53,6 +53,7 @@ grammar IsiLang;
 	private boolean isOpExp = false;
     private boolean isOpRaiz = false;
     private boolean isOpLog = false;
+    private String _caseCondition;
 	
 	public void verificaID(String id){
 		if (!symbolTable.exists(id)){
@@ -304,7 +305,8 @@ cmdescolha  : 'escolha' AP
 
                           ){
                              compatibilidadeTipos(varMap.get(_exprSwitch).getType(), _exprSwitch, termType, _exprContent);
-                             caseCondition.add(_exprContent);
+                             _caseCondition = _exprContent;
+                             caseCondition.add(_caseCondition);
                            }
                           COLON
                           {
@@ -315,7 +317,7 @@ cmdescolha  : 'escolha' AP
                           'break'
                           SC
                           {
-                            cases.put(_exprContent,stack.pop());
+                            cases.put(_caseCondition,stack.pop());
                           }
                          )+
                         (

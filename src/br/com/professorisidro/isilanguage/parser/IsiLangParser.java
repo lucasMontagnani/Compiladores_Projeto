@@ -142,6 +142,7 @@ public class IsiLangParser extends Parser {
 		private boolean isOpExp = false;
 	    private boolean isOpRaiz = false;
 	    private boolean isOpLog = false;
+	    private String _caseCondition;
 		
 		public void verificaID(String id){
 			if (!symbolTable.exists(id)){
@@ -1229,7 +1230,8 @@ public class IsiLangParser extends Parser {
 				}
 
 				                             compatibilidadeTipos(varMap.get(_exprSwitch).getType(), _exprSwitch, termType, _exprContent);
-				                             caseCondition.add(_exprContent);
+				                             _caseCondition = _exprContent;
+				                             caseCondition.add(_caseCondition);
 				                           
 				setState(175);
 				match(COLON);
@@ -1258,7 +1260,7 @@ public class IsiLangParser extends Parser {
 				setState(183);
 				match(SC);
 
-				                            cases.put(_exprContent,stack.pop());
+				                            cases.put(_caseCondition,stack.pop());
 				                          
 				}
 				}
