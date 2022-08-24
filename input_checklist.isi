@@ -1,0 +1,42 @@
+programa
+  ?? item_checklist: Possuir 2 tipos de dados (pelo menos 1 String)
+  numero num1, num2, i;
+  texto txt1;
+
+  ?? item_checklist: Verificar se há variáveis declaradas e não-utilizadas (warning)
+  texto txt5;
+  
+  ?? item_checklist: Aceitar números decimais
+  numero num3;
+  num3 = 3.14159265359;
+
+  ?? item_checklist: Verificar Atribuições com compatibilidade de tipos (semântica)
+  ?? txt1 = num1;
+
+  ?? item_checklist: Pelo menos 1 estrutura de repetição
+  i = 5;
+  enquanto (i > 0){
+    escreva(i);
+    i = i - 1;
+  }
+  
+  ?? item_checklist: Verificar declaração de variávies (não usar variáveis que não foram declaradas)
+  ?? escreva(numNaoDeclarado);
+
+  ?? item_checklist: Possuir operações de Entrada e Saída
+  escreva("Digite o primeiro numero");
+  leia(num1);
+  escreva("Digite o segundo numero");
+  leia(num2);
+  
+  ?? Possuir a instrução de decisão (if/else)
+  se (num1 > num2) {
+    escreva(num1);
+  } senao {
+    escreva(num2);
+  }
+
+  ?? item_checklist: Geração de pelo menos 1 linguagem destino (C/Java/Python)
+  ?? Linguagem gerada: Java		
+
+fimprog;
