@@ -1,69 +1,31 @@
 programa
 
-  numero a, b, c, d, e, w, y, x;
-  inteiro r, s;
-  inteiro f;
-  texto teste;
-  texto cs;
-  inteiro i;
-  texto m;
-  caractere u;
-  boleano t;
+ texto welcome;
+   texto tInt;
+   texto tInt2;
+   inteiro a;
+   inteiro b;
+   inteiro c;
 
-  u = 't';
-  t = falso;
-  escreva(u);
-  i = 5;
-  teste = "Digite um número: ";
-  b = 4.9;
-  c = 3.688;
-  f = 10;
-  escreva(teste);
-  escreva (c);
-  leia(d);
-  escreva(f);
-  f = i;
-  escreva(f);
-  escreva(i);
-  c = b;
+   welcome = "IsiLanguagem em Ação!";
+   tInt = "Digite um inteiro: ";
 
-  a = b*c;
-  escreva(a);
+   leia(a);
+   tInt2 = "Digite outro inteiro: ";
+   leia(b);
 
-  a = b/c;
-  escreva(a);
-  cs = "teste";
-  se (f==10){
-    escreva(f);
-  } senao{
-    escreva(i);
-  }
-  escolha (cs){
-    caso "teste":
-            escreva (cs);
-            break;
-    caso "teste2":
-            escreva (i);
-            break;
-    padrao:
-            escreva (f);
-  }
-  i=10;
-  enquanto(i<10){
-    escreva(i);
-    i = i-1;
-  }
+	?? Testando.....
 
-  w = 25 #;
-  escreva(w);
-
-  y = 10 ^ 2;
-  escreva(y);
-
-  y = 10 ** 3;
-  escreva(y);
-
-  x = 2 $ 2;
-  escreva(x);
+   se(a==b){
+     escreva("Os dois inteiros são iguais!");
+   }
+   c = 2*a;
+   se (b==c){
+    escreva("O segundo inteiro é o dobro do primeiro!");
+   }
+   senao {
+    escreva("O segundo inteiro não é o dobro do primeiro!");
+   }
 
 fimprog;
+nextBoolean()

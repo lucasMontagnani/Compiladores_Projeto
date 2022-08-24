@@ -42,7 +42,7 @@ public class IsiLangParser extends Parser {
 		T__9=10, T__10=11, T__11=12, T__12=13, T__13=14, T__14=15, T__15=16, AP=17, 
 		FP=18, PT=19, COLON=20, SC=21, OP=22, ATTR=23, VIR=24, ACH=25, FCH=26, 
 		OPREL=27, BOLEANO=28, ID=29, INT=30, NUMBER=31, WS=32, CARACTER=33, TEXTO=34, 
-		OPEXP=35, OPRAIZ=36, OPLOG=37;
+		OPEXP=35, OPRAIZ=36, OPLOG=37, COMENTLINHA=38, COMENTBLOCO=39;
 	public static final int
 		RULE_prog = 0, RULE_decl = 1, RULE_declaravar = 2, RULE_tipo = 3, RULE_bloco = 4, 
 		RULE_cmd = 5, RULE_cmdleitura = 6, RULE_cmdescrita = 7, RULE_cmdattrib = 8, 
@@ -64,7 +64,7 @@ public class IsiLangParser extends Parser {
 		null, null, null, null, null, null, null, null, null, null, null, null, 
 		null, null, null, null, null, "AP", "FP", "PT", "COLON", "SC", "OP", "ATTR", 
 		"VIR", "ACH", "FCH", "OPREL", "BOLEANO", "ID", "INT", "NUMBER", "WS", 
-		"CARACTER", "TEXTO", "OPEXP", "OPRAIZ", "OPLOG"
+		"CARACTER", "TEXTO", "OPEXP", "OPRAIZ", "OPLOG", "COMENTLINHA", "COMENTBLOCO"
 	};
 	public static final Vocabulary VOCABULARY = new VocabularyImpl(_LITERAL_NAMES, _SYMBOLIC_NAMES);
 
@@ -160,7 +160,7 @@ public class IsiLangParser extends Parser {
 		}
 		
 		public void compatibilidadeTipos(int tipo1, String varName1, int tipo2, String varName2){
-		    if(varMap.get(varName1) != null && varMap.get(varName2) != null){
+		    if(varMap.get(varName1) != null && varMap.get(varName2) != null && !varMap.get(varName2).getUsada()){
 		        if((varMap.get(varName2)).getValue() == null){
 	                throw new IsiSemanticException("Error: null exception, symbol ["+varName2+"] can not be assign to symbol ["+varName1 + "], because it is null.");
 	            }
@@ -667,7 +667,7 @@ public class IsiLangParser extends Parser {
 			match(ID);
 			 verificaID(_input.LT(-1).getText());
 			                     	  _readID = _input.LT(-1).getText();
-			                     	  
+
 			                     	  setUsedVar(_input.LT(-1).getText());
 			                        
 			setState(82);
@@ -1561,7 +1561,7 @@ public class IsiLangParser extends Parser {
 	}
 
 	public static final String _serializedATN =
-		"\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3\'\u00f3\4\2\t\2\4"+
+		"\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3)\u00f3\4\2\t\2\4"+
 		"\3\t\3\4\4\t\4\4\5\t\5\4\6\t\6\4\7\t\7\4\b\t\b\4\t\t\t\4\n\t\n\4\13\t"+
 		"\13\4\f\t\f\4\r\t\r\4\16\t\16\4\17\t\17\3\2\3\2\3\2\3\2\3\2\3\2\3\3\6"+
 		"\3&\n\3\r\3\16\3\'\3\4\3\4\3\4\3\4\3\4\3\4\7\4\60\n\4\f\4\16\4\63\13\4"+

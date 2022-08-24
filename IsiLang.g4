@@ -71,7 +71,7 @@ grammar IsiLang;
 	}
 	
 	public void compatibilidadeTipos(int tipo1, String varName1, int tipo2, String varName2){
-	    if(varMap.get(varName1) != null && varMap.get(varName2) != null){
+	    if(varMap.get(varName1) != null && varMap.get(varName2) != null && !varMap.get(varName2).getUsada()){
 	        if((varMap.get(varName2)).getValue() == null){
                 throw new IsiSemanticException("Error: null exception, symbol ["+varName2+"] can not be assign to symbol ["+varName1 + "], because it is null.");
             }
@@ -175,7 +175,7 @@ cmd		:  cmdleitura
 cmdleitura	: 'leia' AP
                      ID { verificaID(_input.LT(-1).getText());
                      	  _readID = _input.LT(-1).getText();
-                     	  
+
                      	  setUsedVar(_input.LT(-1).getText());
                         } 
                      FP 
@@ -479,3 +479,9 @@ OPRAIZ : '#'
 
 OPLOG : '$'
       ;
+      
+COMENTLINHA : '??' ~[\r\n]* -> skip
+	        ;
+
+COMENTBLOCO : '?*' .*? '*?' -> skip
+			;
