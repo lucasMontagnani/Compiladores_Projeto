@@ -479,3 +479,9 @@ OPRAIZ : '#'
 
 OPLOG : '$'
       ;
+      
+COMENTLINHA : '??' ~[\r\n]* -> skip
+	        ;
+
+COMENTBLOCO : '?*' .*? '*?' -> skip
+			;

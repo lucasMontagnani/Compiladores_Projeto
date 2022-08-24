@@ -14,6 +14,8 @@ programa
    tInt2 = "Digite outro inteiro: ";
    leia(b);
 
+	?? Testando.....
+
    se(a==b){
      escreva("Os dois inteiros são iguais!");
    }
