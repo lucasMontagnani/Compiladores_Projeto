@@ -49,7 +49,7 @@ programa
     escreva(d);
    }
 
-   tCase =  "Digite: 1 - Para imprimir o 1º inteiro; 2 - Para imprimir o 2º inteiro; 3 - Para o real resultante:"
+   tCase =  "Digite: 1 - Para imprimir o 1º inteiro; 2 - Para imprimir o 2º inteiro; 3 - Para o real resultante:";
    escreva (tCase);
    leia(cs);
 
