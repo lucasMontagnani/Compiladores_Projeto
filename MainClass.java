@@ -14,6 +14,7 @@ public class MainClass{
 		String  welcome;
 		String  tInt;
 		welcome = "IsiLanguagem em Ação!";
+		System.out.println(welcome);
 		tInt = "Digite um inteiro: ";
 		System.out.println(tInt);
 		a= _key.nextInt();
@@ -35,7 +36,7 @@ public class MainClass{
 		if (t==true) {
 			d = a*b;			System.out.println(d);
 		} else {
-			d = a;			System.out.println(d);
+			d = a/b;			System.out.println(d);
 		}
 		tCase = "Digite: 1 - Para imprimir o 1º inteiro; 2 - Para imprimir o 2º inteiro; 3 - Para o real resultante:";
 		System.out.println(tCase);

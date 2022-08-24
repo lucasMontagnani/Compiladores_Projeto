@@ -13,6 +13,7 @@ programa
    numero d;
 
    welcome = "IsiLanguagem em Ação!";
+   escreva (welcome);
    tInt = "Digite um inteiro: ";
    escreva(tInt);
    leia(a);
@@ -42,7 +43,7 @@ programa
     escreva(d);
    }
    senao{
-    d = a\b;
+    d = a/b;
     escreva(d);
    }
 
