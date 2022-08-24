@@ -3,18 +3,24 @@ programa
  texto welcome;
    texto tInt;
    texto tInt2;
+   texto tBoolean;
+   texto tCase;
    inteiro a;
    inteiro b;
    inteiro c;
+   inteiro cs;
+   boleano t;
+   numero d;
 
    welcome = "IsiLanguagem em Ação!";
    tInt = "Digite um inteiro: ";
-
+   escreva(tInt);
    leia(a);
    tInt2 = "Digite outro inteiro: ";
+   escreva(tInt2);
    leia(b);
 
-	?? Testando.....
+   	?? Testando.....
 
    se(a==b){
      escreva("Os dois inteiros são iguais!");
@@ -27,5 +33,39 @@ programa
     escreva("O segundo inteiro não é o dobro do primeiro!");
    }
 
+   tBoolean = "Escreva true (verdadeiro) para multiplicar o primeiro inteiro pelo segundo e retornar o inteiro ou false (falso) para dividir";
+   escreva(tBoolean);
+   leia(t);
+
+   se(t == verdadeiro){
+    d = a * b;
+    escreva(d);
+   }
+   senao{
+    d = a\b;
+    escreva(d);
+   }
+
+   tCase =  "Digite: 1 - Para imprimir o 1º inteiro; 2 - Para imprimir o 2º inteiro; 3 - Para o real resultante:"
+   escreva (tCase);
+   leia(cs);
+
+   escolha (cs){
+       caso 1:
+            escreva("Opção 1 escolhida!");
+            escreva(a);
+            break;
+       caso 2:
+            escreva("Opção 2 escolhida!");
+            escreva(b);
+            break;
+       caso 3:
+            escreva("Opção 3 escolhida!");
+            escreva(d);
+            break;
+       padrao:
+            escreva("Opção inválida!");
+   }
+
+
 fimprog;
-nextBoolean()
