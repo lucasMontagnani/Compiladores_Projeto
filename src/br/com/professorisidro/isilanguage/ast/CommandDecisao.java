@@ -17,7 +17,8 @@ public class CommandDecisao extends AbstractCommand {
 	public String generateJavaCode() {
 		// TODO Auto-generated method stub
 		StringBuilder str = new StringBuilder();
-		str.append("		if ("+condition+") {\n");
+		String checkCondition = condition.contains("verdadeiro") ? condition.replaceAll("verdadeiro", "true") : condition.contains("falso") ? condition.replaceAll("falso", "false"): condition;
+		str.append("		if ("+ checkCondition+") {\n");
 		for (AbstractCommand cmd: listaTrue) {
 			str.append("	" + cmd.generateJavaCode());
 		}
