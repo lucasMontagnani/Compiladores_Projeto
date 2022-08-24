@@ -1,18 +1,29 @@
 programa
 
-  numero a, b;
+ texto welcome;
+   texto tInt;
+   texto tInt2;
+   inteiro a;
+   inteiro b;
+   inteiro c;
 
-  leia(a);
-  leia(b);
+   welcome = "IsiLanguagem em Ação!";
+   tInt = "Digite um inteiro: ";
 
-  a = 1 + b;
+   leia(a);
+   tInt2 = "Digite outro inteiro: ";
+   leia(b);
 
-
-  se ( a > b ) {
-     escreva (a);
-  }
-  senao {
-     escreva (b);
-  }
+   se(a==b){
+     escreva("Os dois inteiros são iguais!");
+   }
+   c = 2*a;
+   se (b==c){
+    escreva("O segundo inteiro é o dobro do primeiro!");
+   }
+   senao {
+    escreva("O segundo inteiro não é o dobro do primeiro!");
+   }
 
 fimprog;
+nextBoolean()
