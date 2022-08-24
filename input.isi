@@ -1,69 +1,18 @@
 programa
 
-  numero a, b, c, d, e, w, y, x;
-  inteiro r, s;
-  inteiro f;
-  texto teste;
-  texto cs;
-  inteiro i;
-  texto m;
-  caractere u;
-  boleano t;
+  numero a, b;
 
-  u = 't';
-  t = falso;
-  escreva(u);
-  i = 5;
-  teste = "Digite um número: ";
-  b = 4.9;
-  c = 3.688;
-  f = 10;
-  escreva(teste);
-  escreva (c);
-  leia(d);
-  escreva(f);
-  f = i;
-  escreva(f);
-  escreva(i);
-  c = b;
+  leia(a);
+  leia(b);
 
-  a = b*c;
-  escreva(a);
+  a = 1 + b;
 
-  a = b/c;
-  escreva(a);
-  cs = "teste";
-  se (f==10){
-    escreva(f);
-  } senao{
-    escreva(i);
+
+  se ( a > b ) {
+     escreva (a);
   }
-  escolha (cs){
-    caso "teste":
-            escreva (cs);
-            break;
-    caso "teste2":
-            escreva (i);
-            break;
-    padrao:
-            escreva (f);
+  senao {
+     escreva (b);
   }
-  i=10;
-  enquanto(i<10){
-    escreva(i);
-    i = i-1;
-  }
-
-  w = 25 #;
-  escreva(w);
-
-  y = 10 ^ 2;
-  escreva(y);
-
-  y = 10 ** 3;
-  escreva(y);
-
-  x = 2 $ 2;
-  escreva(x);
 
 fimprog;
