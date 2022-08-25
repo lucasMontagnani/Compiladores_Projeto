@@ -1,42 +1,43 @@
 programa
   ?? item_checklist: Possuir 2 tipos de dados (pelo menos 1 String)
-  numero num1, num2, i;
+  numero num1, num2, i, numTeste;
   texto txt1;
 
-  ?? item_checklist: Verificar se há variáveis declaradas e não-utilizadas (warning)
+  ?? item_checklist: Verificar se ha variaveis declaradas e nao-utilizadas (warning)
   texto txt5;
   
-  ?? item_checklist: Aceitar números decimais
+  ?? item_checklist: Aceitar numeros decimais
   numero num3;
   num3 = 3.14159265359;
 
-  ?? item_checklist: Verificar Atribuições com compatibilidade de tipos (semântica)
-  ?? txt1 = num1;
+  ?? item_checklist: Verificar Atribuicoes com compatibilidade de tipos (semantica)
+  ??numTeste = 7.0;
+  ??txt1 = numTeste;
 
-  ?? item_checklist: Pelo menos 1 estrutura de repetição
-  i = 5;
+  ?? item_checklist: Pelo menos 1 estrutura de repeticao
+  i = 5.0;
   enquanto (i > 0){
     escreva(i);
-    i = i - 1;
+    i = i - 1.0;
   }
   
-  ?? item_checklist: Verificar declaração de variávies (não usar variáveis que não foram declaradas)
+  ?? item_checklist: Verificar declaracao de variavies (nao usar variaveis que nao foram declaradas)
   ?? escreva(numNaoDeclarado);
 
-  ?? item_checklist: Possuir operações de Entrada e Saída
+  ?? item_checklist: Possuir operacoes de Entrada e Saida
   escreva("Digite o primeiro numero");
   leia(num1);
   escreva("Digite o segundo numero");
   leia(num2);
   
-  ?? Possuir a instrução de decisão (if/else)
+  ?? Possuir a instrucaoo de decisao (if/else)
   se (num1 > num2) {
     escreva(num1);
   } senao {
     escreva(num2);
   }
 
-  ?? item_checklist: Geração de pelo menos 1 linguagem destino (C/Java/Python)
+  ?? item_checklist: Geracao de pelo menos 1 linguagem destino (C/Java/Python)
   ?? Linguagem gerada: Java		
 
 fimprog;
