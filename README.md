@@ -41,3 +41,5 @@
 |                                   Criar um editor Web para o código                                  |     N     |
 | Tornar o compilador um Webservice para receber programas e enviar respostas de possíveis erros       |     N     |
 
+Obs: **O editor com Highlights de palavras reservadas está no pacote TextEditorIsiLanguage por ser uma aplicação separada e o restante das implementações do compilador se encontra no pacote Compiladores_Projeto.**
+
