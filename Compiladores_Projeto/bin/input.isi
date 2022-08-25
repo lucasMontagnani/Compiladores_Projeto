@@ -1,0 +1,91 @@
+programa
+
+ texto welcome;
+   texto tInt;
+   texto tInt2;
+   texto tBoolean;
+   texto tCase;
+   texto tChar;
+   inteiro a;
+   inteiro b;
+   inteiro c;
+   inteiro cs;
+   boleano t;
+   numero d;
+   caractere fimIsi;
+
+   welcome = "IsiLanguagem em Ação!";
+   escreva (welcome);
+   tInt = "Digite um inteiro: ";
+   escreva(tInt);
+   leia(a);
+   tInt2 = "Digite outro inteiro: ";
+   escreva(tInt2);
+   leia(b);
+
+   	?? Testando.....
+
+   se(a==b){
+     escreva("Os dois inteiros são iguais!");
+   }
+   c = 2*a;
+   se (b==c){
+    escreva("O segundo inteiro é o dobro do primeiro!");
+   }
+   senao {
+    escreva("O segundo inteiro não é exatamente o dobro do primeiro!");
+   }
+
+   tBoolean = "Escreva true (verdadeiro) para multiplicar o primeiro inteiro pelo segundo e retornar o inteiro ou false (falso) para dividir";
+   escreva(tBoolean);
+   leia(t);
+
+   se(t == verdadeiro){
+    d = a * b;
+    escreva(d);
+   }
+   senao{
+    d = a/b;
+    escreva(d);
+   }
+
+   tCase =  "Digite: 1 - Para imprimir o 1º inteiro; 2 - Para imprimir o 2º inteiro; 3 - Somar os dois inteiros; 4 - Para subtrair o segundo inteiro do primeiro; 4 - Para o real resultante:";
+   escreva (tCase);
+   leia(cs);
+
+   escolha (cs){
+       caso 1:
+            escreva("Opção 1 escolhida!");
+            escreva(a);
+            break;
+       caso 2:
+            escreva("Opção 2 escolhida!");
+            escreva(b);
+            break;
+       caso 3:
+            escreva("Opção 3 escolhida!");
+            c = a + b;
+            escreva(c);
+            break;
+       caso 4:
+            escreva("Opção 4 escolhida!");
+            c = a - b;
+            escreva(c);
+            break;
+       caso 5:
+            escreva("Opção 5 escolhida!");
+            escreva(d);
+            break;
+       padrao:
+            escreva("Opção inválida!");
+   }
+
+   tChar = "Digite um caractere para finalizar o programa: ";
+   escreva (tChar);
+   leia (fimIsi);
+   escreva ("Caractere digitado : ");
+   escreva(fimIsi);
+   escreva("Programa encerrado. Goodbye!");
+
+
+fimprog;
