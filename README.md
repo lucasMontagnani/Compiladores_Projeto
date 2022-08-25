@@ -33,3 +33,11 @@
 |                                         Mais tipos de dados                                          |     S     |
 |               Inclusão de novos operadores (exponenciação, raiz quadrada, logaritmos)                |     S     |
 
+
+|                                             **ANEXO 2**                                              | **FEITO** |
+|:----------------------------------------------------------------------------------------------------:|:---------:|
+|                                 Criar um interpretador a partir da AST                               |     N     |
+|                 Criar um editor com Highlights de palavras reservadas (editor Desktop)               |     S     |
+|                                   Criar um editor Web para o código                                  |     N     |
+| Tornar o compilador um Webservice para receber programas e enviar respostas de possíveis erros       |     N     |
+
